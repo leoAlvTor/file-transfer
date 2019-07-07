@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class Client {
-
+	//COMPROBANO NUEVA RAMA PEDRO 
     private final static int SOCKET_PORT = 2205;      // you may change this
     private final static String SERVER = "localhost";  // localhost
     private static String pathToSave = "/home/Leo/Documents/Recive/File";
     private final static int FILE_SIZE = 6022386;
-
+    /*
+     * 
+     * ella no te ama
+     * 
+     * 
+     */
     public static void main(String args[])throws IOException{
         int bytesRead;
         int current = 0;
