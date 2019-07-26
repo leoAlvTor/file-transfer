@@ -12,6 +12,7 @@ import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -24,6 +25,7 @@ public class Client
 {
   private JTextField txtName;
   private JTextField txtPath;
+  private JTextField txtIP;
   private ActionListener taskPerformer;
   private Timer timer;
   private boolean flag;
@@ -45,11 +47,11 @@ public class Client
     setLocationRelativeTo(null);
     setLayout(new BorderLayout());
     components();
-    setSize(350, 100);
+    setSize(350, 125);
   }
   
   public void components() {
-    JPanel pnl1 = new JPanel(new GridLayout(2, 2));
+    JPanel pnl1 = new JPanel(new GridLayout(3, 2));
     JPanel pnl2 = new JPanel(new FlowLayout());
     
     JButton btnStart = new JButton("Iniciar Recepcion");
@@ -66,14 +68,18 @@ public class Client
     
     JLabel lblName = new JLabel("Nombre del archivo:");
     JLabel lblPath = new JLabel("Direccion de recepcion:");
+    JLabel lblIPserver = new JLabel("Direccion IP de servidor:");
     
     this.txtName = new JTextField(30);
     this.txtPath = new JTextField(30);
+    this.txtIP = new JTextField(30);
     
     pnl1.add(lblName, new GridLayout(1, 1));
     pnl1.add(this.txtName, new GridLayout(1, 2));
     pnl1.add(lblPath, new GridLayout(2, 1));
     pnl1.add(this.txtPath, new GridLayout(2, 2));
+    pnl1.add(lblIPserver, new GridLayout(3, 1));
+    pnl1.add(this.txtIP, new GridLayout(3, 2));
     
     pnl2.add(btnStart);
     pnl2.add(btnClean);
@@ -97,10 +103,12 @@ public class Client
     Socket sock = null;
     try {
       try {
-        sock = new Socket("10.10.10.10", 2205);
-      } catch (Exception e) {
-        System.out.println("ERROR ERROR ERROR ERROR");
-      } 
+        sock = new Socket(txtIP.getText(), 2205);//Dirección ip del servidor y numero de puerto    
+      } catch (Exception e) {	
+    	  System.out.println("ERROR ERROR ERROR ERROR");	
+    	  JOptionPane.showMessageDialog(null, "!Error de conexión verificar direccion IP¡");
+      }
+      
       System.out.println("Connecting...");
       byte[] mybytearray = new byte[9999999];
       InputStream is = sock.getInputStream();
@@ -116,7 +124,7 @@ public class Client
       bos.flush();
       System.out.println("File " + pathToSave + " downloaded (" + current + " bytes read)");
     } finally {
-      
+      JOptionPane.showMessageDialog(null, "!Archivo recibido con exito¡");
       if (fos != null) fos.close(); 
       if (bos != null) bos.close(); 
       if (sock != null) sock.close(); 
